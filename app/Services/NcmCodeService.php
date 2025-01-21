@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\NcmCode;
+use App\Models\NcmCodeHistory;
 use Illuminate\Support\Facades\Artisan;
 
 class NcmCodeService
@@ -25,6 +26,8 @@ class NcmCodeService
                 'last_page' => $ncmCodes->lastPage(), // Última página
             ],
         ];
+
+        return $response;
     } // index()
 
     public function show($code){
@@ -156,5 +159,30 @@ class NcmCodeService
             'message' => 'Importação iniciada com sucesso.',
         ];
     } // import()
+
+    /**
+     * Lista o histórico de atualizações de um NCM
+     * @param string $code
+     * @return array
+     */
+    public function history($code): array
+    {
+        $ncmCode = NcmCode::where('ncm_code', $code)->first();
+
+        if (!$ncmCode) {
+            return [];
+        }
+
+        $history = NcmCodeHistory::where([
+            ['ncm_code', '=', $code]
+        ])
+        ->orderBy('updated_at', 'desc')
+        ->get();
+
+        return [
+            'ncm_code' => $code,
+            'history' => $history,
+        ];
+    }
 
 }

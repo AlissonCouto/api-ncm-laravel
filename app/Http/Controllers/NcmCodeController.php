@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Services\NcmCodeService;
+use Illuminate\Http\JsonResponse;
 
 class NcmCodeController extends Controller
 {
@@ -16,9 +17,10 @@ class NcmCodeController extends Controller
 
     /**
      * Retorna lista de todos os NCM com paginação.
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function index(){
+    public function index(): JsonResponse
+    {
 
         $response = $this->service->index();
 
@@ -28,9 +30,10 @@ class NcmCodeController extends Controller
     /**
      * Busca NCM através do codigo.
      * @param string $code
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function show(string $code){
+    public function show(string $code): JsonResponse
+    {
 
         $response = $this->service->show($code);
 
@@ -48,9 +51,10 @@ class NcmCodeController extends Controller
      * Buscar NCMs por descrição ou parte dela.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function search(Request $request){
+    public function search(Request $request): JsonResponse
+    {
 
         $description = $request->description;
 
@@ -68,9 +72,10 @@ class NcmCodeController extends Controller
 
     /**
      * Retorna todos os registros com parent_codigo = NULL.
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function categories(){
+    public function categories(): JsonResponse
+    {
         $response = $this->service->categories();
 
         return response()->json($response, 200);
@@ -79,9 +84,10 @@ class NcmCodeController extends Controller
     /**
      * Lista as subcategorias de um código específico.
      * @param string $code
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function subcategories(string $code){
+    public function subcategories(string $code): JsonResponse
+    {
         $response = $this->service->subcategories($code);
 
         if (!$response) {
@@ -99,12 +105,32 @@ class NcmCodeController extends Controller
 
     /**
      * Método usado para importar dados do arquivo JSON
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function import()
+    public function import(): JsonResponse
     {
         $response = $this->service->import();
 
         return response()->json($response, 200);
     } // import()
+
+    /**
+     * Lista o histórico de atualizações de um NCM
+     * @param string $code
+     * @return JsonResponse
+     */
+    public function history($code): JsonResponse
+    {
+
+        $response = $this->service->history($code);
+
+        if(!$response){
+            return response()->json([
+                'message' => 'NCM não encontrado.'],
+                404
+            );
+        }
+
+        return response()->json($response, 200);
+    }
 }
