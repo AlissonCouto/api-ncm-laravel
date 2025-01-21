@@ -11,3 +11,4 @@ Route::post('/ncm/import', [NcmCodeController::class, 'import'])->name('ncm.impo
 Route::get('/ncm/{code}', [NcmCodeController::class, 'show'])->name('ncm.show');
 Route::get('/ncm/{code}/subcategories', [NcmCodeController::class, 'subcategories'])->name('ncm.subcategories');
 Route::get('/ncm/{code}/history', [NcmCodeController::class, 'history'])->name('ncm.history');
+Route::get('/ncm/search/advanced', [NcmCodeController::class, 'advancedSearch'])->name('ncm.advancedSearch');

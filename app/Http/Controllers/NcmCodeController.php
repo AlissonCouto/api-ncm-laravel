@@ -132,5 +132,16 @@ class NcmCodeController extends Controller
         }
 
         return response()->json($response, 200);
-    }
+    } // history()
+
+    /**
+     * Busca avançada de NCMs
+     * @param Request $request
+     * @return JsonResponse
+    */
+    public function advancedSearch(Request $request): JsonResponse
+    {
+        $response = $this->service->advancedSearch($request);
+        return response()->json($response, 200);
+    } // advancedSearch()
 }

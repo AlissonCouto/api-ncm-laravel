@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\NcmCode;
 use App\Models\NcmCodeHistory;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Http\Request;
 
 class NcmCodeService
 {
@@ -183,6 +184,65 @@ class NcmCodeService
             'ncm_code' => $code,
             'history' => $history,
         ];
-    }
+    } // history()
+
+    /**
+     * Busca avançada de NCMs
+     * @param Request $request
+     * @return array
+    */
+    public function advancedSearch(Request $request): array
+    {
+
+        $query = NcmCode::query();
+
+        if ($request->filled('code')) {
+            $query->where('ncm_code', 'like', '%' . $request->ncm_code . '%');
+        }
+
+        if ($request->filled('description')) {
+            $query->where('description', 'like', '%' . $request->description . '%');
+        }
+
+        if ($request->filled('start_date')) {
+            $query->where('start_date', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->where('end_date', '<=', $request->end_date);
+        }
+
+        if ($request->filled('normative_act_type')) {
+            $query->where('normative_act_type', $request->tipo_ato);
+        }
+
+        if ($request->filled('normative_act_number')) {
+            $query->where('normative_act_number', $request->numero_ato);
+        }
+
+        if ($request->filled('normative_act_year')) {
+            $query->where('normative_act_year', $request->ano_ato);
+        }
+
+        $results = $query->paginate(20);
+
+        $response = [
+            'data' => $results->items(),
+            'links' => [
+                'self' => $results->url($results->currentPage()),
+                'first' => $results->url(1),
+                'last' => $results->url($results->lastPage()),
+                'prev' => $results->previousPageUrl(),
+                'next' => $results->nextPageUrl(),
+            ],
+            'meta' => [
+                'current_page' => $results->currentPage(),
+                'per_page' => $results->perPage(),
+                'total' => $results->total(),
+            ],
+        ];
+
+        return $response;
+    } // advancedSearch()
 
 }
