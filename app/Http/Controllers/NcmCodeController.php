@@ -50,7 +50,7 @@ class NcmCodeController extends Controller
     /**
      * Buscar NCMs por descrição ou parte dela.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return JsonResponse
      */
     public function search(Request $request): JsonResponse
