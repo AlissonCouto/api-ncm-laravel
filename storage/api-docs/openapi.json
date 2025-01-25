@@ -1,0 +1,538 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/api/ncm": {
+            "get": {
+                "tags": [
+                    "NCM"
+                ],
+                "summary": "Listar todos os NCMs",
+                "operationId": "df8d5026c6d10f43c80cc50fb80f1622",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página para paginação",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de NCMs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "ncm_code": {
+                                                        "type": "string",
+                                                        "example": "0101.21.00"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Reprodutores de raça pura"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ncm/{code}": {
+            "get": {
+                "tags": [
+                    "NCM"
+                ],
+                "summary": "Exibir detalhes de um NCM específico",
+                "operationId": "098755d7dae49b3d70205da3046cbe0b",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "Código do NCM a ser exibido",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "0101.21.00"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes do NCM",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "ncm_code": {
+                                            "type": "string",
+                                            "example": "0101.21.00"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Reprodutores de raça pura"
+                                        },
+                                        "start_date": {
+                                            "type": "string",
+                                            "example": "2022-01-01"
+                                        },
+                                        "end_date": {
+                                            "type": "string",
+                                            "example": "9999-12-31"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ncm/search": {
+            "get": {
+                "tags": [
+                    "NCM"
+                ],
+                "summary": "Buscar NCMs por código ou descrição",
+                "operationId": "e08152bec7bc53c565a27babdabd985a",
+                "parameters": [
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Texto a ser buscado no código ou descrição",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "0101"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultados da busca",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "ncm_code": {
+                                                "type": "string",
+                                                "example": "0101.21.00"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Reprodutores de raça pura"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ncm/categories": {
+            "get": {
+                "tags": [
+                    "NCM"
+                ],
+                "summary": "Listar categorias principais de NCM",
+                "operationId": "200e1b1495598b336e53f6ae8738c713",
+                "responses": {
+                    "200": {
+                        "description": "Lista de categorias principais",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "ncm_code": {
+                                                "type": "string",
+                                                "example": "01"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Animais vivos"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ncm/{code}/subcategories": {
+            "get": {
+                "tags": [
+                    "NCM"
+                ],
+                "summary": "Listar subcategorias de um NCM específico",
+                "operationId": "f217909deaf051df2b33d5b18678b46a",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "Código do NCM pai",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "01"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de subcategorias",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "ncm_code": {
+                                                "type": "string",
+                                                "example": "0101"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Cavalos vivos"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ncm/{code}/history": {
+            "get": {
+                "tags": [
+                    "NCM"
+                ],
+                "summary": "Exibir histórico de um NCM",
+                "operationId": "c54270da4afd1757ca2f9b0031b56430",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "Código do NCM",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "0101.21.00"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Histórico do NCM",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "change_date": {
+                                                "type": "string",
+                                                "example": "2023-01-01"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Descrição alterada"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ncm/search/advanced": {
+            "get": {
+                "tags": [
+                    "NCM"
+                ],
+                "summary": "Buscar NCMs com múltiplos filtros",
+                "operationId": "93d3523bf0e8cc44d740c4df9d2c547a",
+                "parameters": [
+                    {
+                        "name": "codigo",
+                        "in": "query",
+                        "description": "Parte do código NCM",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "0101"
+                        }
+                    },
+                    {
+                        "name": "descricao",
+                        "in": "query",
+                        "description": "Palavra-chave na descrição",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "animal"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultados da busca avançada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "ncm_code": {
+                                                "type": "string",
+                                                "example": "0101.21.00"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Reprodutores de raça pura"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ncm/reports/totals": {
+            "get": {
+                "tags": [
+                    "Relatórios"
+                ],
+                "summary": "Obter estatísticas gerais de NCMs",
+                "operationId": "4bcb870ac8ebe5a3838f9dc51fe7ea15",
+                "responses": {
+                    "200": {
+                        "description": "Retorna estatísticas gerais dos NCMs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_ncms": {
+                                            "type": "integer",
+                                            "example": 15141
+                                        },
+                                        "total_valid_ncms": {
+                                            "type": "integer",
+                                            "example": 15000
+                                        },
+                                        "total_categories": {
+                                            "type": "integer",
+                                            "example": 98
+                                        },
+                                        "total_subcategories": {
+                                            "type": "integer",
+                                            "example": 15043
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ncm/reports/valid": {
+            "get": {
+                "tags": [
+                    "Relatórios"
+                ],
+                "summary": "Lista de NCMs válidos atualmente",
+                "description": "Retorna uma lista de NCMs cuja data de validade ainda não expirou.",
+                "operationId": "a5109ee8f058c784a5ade90ed059c6aa",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página para paginação",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Quantidade de itens por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de NCMs válidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "ncm_code": {
+                                                        "type": "string",
+                                                        "example": "0101.21.00"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Reprodutores de raça pura"
+                                                    },
+                                                    "start_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2022-01-01"
+                                                    },
+                                                    "end_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "9999-12-31"
+                                                    },
+                                                    "normative_act_type": {
+                                                        "type": "string",
+                                                        "example": "Res Camex"
+                                                    },
+                                                    "normative_act_number": {
+                                                        "type": "integer",
+                                                        "example": 272
+                                                    },
+                                                    "normative_act_year": {
+                                                        "type": "integer",
+                                                        "example": 2021
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-01-20T12:00:00Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-01-20T12:00:00Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/api/ncm/reports/valid?page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/api/ncm/reports/valid?page=10"
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "example": "null"
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/api/ncm/reports/valid?page=2"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 20
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 200
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nenhum NCM válido encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nenhum NCM válido encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "NCM",
+            "description": "NCM"
+        },
+        {
+            "name": "Relatórios",
+            "description": "Relatórios"
+        }
+    ]
+}

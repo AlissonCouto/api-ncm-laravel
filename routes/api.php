@@ -5,6 +5,20 @@ use App\Http\Controllers\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// Documentation
+Route::get('/swagger/openapi.json', function () {
+    $path = storage_path('api-docs/openapi.json');
+    if (!file_exists($path)) {
+        abort(404, 'Arquivo openapi.json não encontrado.');
+    }
+    return response()->file($path);
+});
+
+Route::get('/ncm/docs', function () {
+    return view('swagger-ui.index');
+});
+
+// Recursos
 Route::get('/ncm', [NcmCodeController::class, 'index'])->name('ncm.index');
 Route::get('/ncm/search', [NcmCodeController::class, 'search'])->name('ncm.search');
 Route::get('/ncm/categories', [NcmCodeController::class, 'categories'])->name('ncm.categories');

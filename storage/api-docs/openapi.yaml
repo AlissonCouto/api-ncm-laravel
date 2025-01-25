@@ -1,0 +1,24 @@
+openapi: 3.0.0
+paths:
+  /api/ncm/reports/totals:
+    get:
+      tags:
+        - Relatórios
+      summary: 'Obter estatísticas gerais de NCMs'
+      operationId: 4bcb870ac8ebe5a3838f9dc51fe7ea15
+      responses:
+        '200':
+          description: 'Retorna estatísticas gerais dos NCMs'
+          content:
+            application/json:
+              schema:
+                properties:
+                  total_ncms: { type: integer, example: 15141 }
+                  total_valid_ncms: { type: integer, example: 15000 }
+                  total_categories: { type: integer, example: 98 }
+                  total_subcategories: { type: integer, example: 15043 }
+                type: object
+tags:
+  -
+    name: Relatórios
+    description: Relatórios
